@@ -34,6 +34,7 @@
       <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="Allow app to access your photos" />
       <!--<<variable name="PHOTO_LIBRARY_USAGE_DESCRIPTION" value="Allow app to access your photos" />-->
   </plugin>
+  <plugin name="phonegap-plugin-barcodescanner" spec="https://github.com/wildabeast/BarcodeScanner.git" />
   
 
 
