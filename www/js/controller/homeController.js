@@ -1,5 +1,5 @@
 
-myApp.controller('homeController', function ($scope, $location, $stateParams, $rootScope, $state, localize, assignmentsService, routeService, initRouteService, localStorageService, $filter, $ionicPopup, notificationService, userService, deliveryItemService,$cordovaBarcodeScanner) {
+myApp.controller('homeController', function ($scope, $location, $stateParams, $rootScope, $state, localize, assignmentsService, routeService, initRouteService, localStorageService, $filter, $ionicPopup, notificationService, userService, deliveryItemService, $cordovaBarcodeScanner) {
   $scope.message = "";
   $scope.data = null;
 
@@ -125,7 +125,7 @@ myApp.controller('homeController', function ($scope, $location, $stateParams, $r
 
   $scope.deliveryRouteSelected = function (route) {
     //if (route.StartTime) {
-      $state.go('app.deliveryItemList', { distributionId: route.DistributionId, routeId: route.RouteId, part: route.Part });
+    $state.go('app.deliveryItemList', { distributionId: route.DistributionId, routeId: route.RouteId, part: route.Part });
     //} else {
     //  routeService.routeStart(route.DistributionId, route.RouteId, route.Part).then(
     //    function (data) {
@@ -468,102 +468,141 @@ myApp.controller('homeController', function ($scope, $location, $stateParams, $r
 
   $scope.scanBarcode = function () {
 
-    $cordovaBarcodeScanner
-      .scan()
-      .then(function (barcodeData) {
-        console.log(barcodeData);
-        if (!barcodeData.cancelled) {
-         // $state.go('app.deliveryItem', { barcode: barcodeData.text });
-         //HS [2018-may-11] - Home Page - Not found the package show only error message.
-         deliveryItemService.getByCode(barcodeData.text).then(
-          function (data) {                               
-           if(data)
-           {
-            $state.go('app.deliveryItem', { barcode: barcodeData.text });
-           }
-           else
-           {
-          
-          var myPopup = $ionicPopup.show({
-          title: 'החבילה לא נמצאה.',
-          template: '<p align="right"> החבילה לא נמצאה </p>',
-          scope: $scope,
-          buttons: [
+    cordova.plugins.barcodeScanner.scan(
+      function (result) 
+      {
+
+        if (!result.cancelled) {
+          // $state.go('app.deliveryItem', { barcode: barcodeData.text });
+          //HS [2018-may-11] - Home Page - Not found the package show only error message.
+          deliveryItemService.getByCode(result.text).then(
+            function (data) {
+              if (data) {
+                $state.go('app.deliveryItem', { barcode: result.text });
+              }
+              else {
+
+                var myPopup = $ionicPopup.show({
+                  title: 'החבילה לא נמצאה.',
+                  template: '<p align="right"> החבילה לא נמצאה </p>',
+                  scope: $scope,
+                  buttons: [
                     {
-                    text: '<b align="center">' + $filter('i18n')("ok") + '</b>',
-                    type: 'button-positive',
-                    onTap: function(e) {
+                      text: '<b align="center">' + $filter('i18n')("ok") + '</b>',
+                      type: 'button-positive',
+                      onTap: function (e) {
+                      }
                     }
-                    }
-                    ]
-          })
-          
-      }
-    })
+                  ]
+                })
+
+              }
+            })
         }
-      }, function (error) {
+
+        // alert("We got a barcode\n" +
+        //       "Result: " + result.text + "\n" +
+        //       "Format: " + result.format + "\n" +
+        //       "Cancelled: " + result.cancelled);
+      },
+      function (error) {
         alert("Scanning failed: " + error);
-      });
+      }
+    );
+
+
+    // $cordovaBarcodeScanner
+    //   .scan()
+    //   .then(function (barcodeData) {
+    //     console.log(barcodeData);
+    //     if (!barcodeData.cancelled) {
+    //       // $state.go('app.deliveryItem', { barcode: barcodeData.text });
+    //       //HS [2018-may-11] - Home Page - Not found the package show only error message.
+    //       deliveryItemService.getByCode(barcodeData.text).then(
+    //         function (data) {
+    //           if (data) {
+    //             $state.go('app.deliveryItem', { barcode: barcodeData.text });
+    //           }
+    //           else {
+
+    //             var myPopup = $ionicPopup.show({
+    //               title: 'החבילה לא נמצאה.',
+    //               template: '<p align="right"> החבילה לא נמצאה </p>',
+    //               scope: $scope,
+    //               buttons: [
+    //                 {
+    //                   text: '<b align="center">' + $filter('i18n')("ok") + '</b>',
+    //                   type: 'button-positive',
+    //                   onTap: function (e) {
+    //                   }
+    //                 }
+    //               ]
+    //             })
+
+    //           }
+    //         })
+    //     }
+    //   }, function (error) {
+    //     alert("Scanning failed: " + error);
+    //   });
 
   }
   //HS [2018-apr-25] - Home - Added scan lable for type barcode to scan function - add click function
   //HS [2018-apr-24] - Home - Added scan lable for type barcode to scan function - add click function
   $scope.scanBarcodeByType = function () {
     $scope.data = {}
-                 
+
     // Custom popup
     var myPopup = $ionicPopup.show({
-            template: '<input type = "text" ng-model = "data.model">',
-            title: 'הקלדת ברקוד לסריקה',
-            //subTitle: 'Subtitle',
-            scope: $scope,
-            
-            buttons: [
-                      { text: $filter('i18n')("cancel")}, {
-                      text: '<b>' + $filter('i18n')("save") + '</b>',
-                      type: 'button-positive',
-                      onTap: function(e) {
-                      if (!$scope.data.model) {
-                      //don't allow the user to close unless he enters model...
-                      e.preventDefault();
-                      } else {
-                       //$state.go('app.deliveryItem', { barcode: $scope.data.model });
-                       //HS [2018-may-11] - Home Page - Not found the package show only error message.
-                       deliveryItemService.getByCode($scope.data.model).then(
-                        function (data) {                               
-                         if(data)
-                         {
-                          $state.go('app.deliveryItem', { barcode: $scope.data.model });
-                         }
-                         else
-                         {
-                        
-                        var myPopup = $ionicPopup.show({
-                        title: 'החבילה לא נמצאה.',
-                        template: '<p align="right"> החבילה לא נמצאה </p>',
-                        scope: $scope,
-                        buttons: [
-                                  {
-                                  text: '<b align="center">' + $filter('i18n')("ok") + '</b>',
-                                  type: 'button-positive',
-                                  onTap: function(e) {
-                                  }
-                                  }
-                                  ]
-                        })
-                        
-                    }
-                  })
-                      }
-                      }
-                      }
-                      ]
-            });
+      template: '<input type = "text" ng-model = "data.model">',
+      title: 'הקלדת ברקוד לסריקה',
+      //subTitle: 'Subtitle',
+      scope: $scope,
 
-myPopup.then(function(res) {
-console.log('Tapped!', res);
-});
-};
+      buttons: [
+        { text: $filter('i18n')("cancel") }, {
+          text: '<b>' + $filter('i18n')("save") + '</b>',
+          type: 'button-positive',
+          onTap: function (e) {
+            if (!$scope.data.model) {
+              //don't allow the user to close unless he enters model...
+              e.preventDefault();
+            } else {
+              //$state.go('app.deliveryItem', { barcode: $scope.data.model });
+              //HS [2018-may-11] - Home Page - Not found the package show only error message.
+              deliveryItemService.getByCode($scope.data.model).then(
+                function (data) {
+                  if (data) {
+                    $state.go('app.deliveryItem', { barcode: $scope.data.model });
+                  }
+                  else {
+
+                    var myPopup = $ionicPopup.show({
+                      title: 'החבילה לא נמצאה.',
+                      template: '<p align="right"> החבילה לא נמצאה </p>',
+                      scope: $scope,
+                      buttons: [
+                        {
+                          text: '<b align="center">' + $filter('i18n')("ok") + '</b>',
+                          type: 'button-positive',
+                          onTap: function (e) {
+                          }
+                        }
+                      ]
+                    })
+
+                  }
+                })
+            }
+          }
+        }
+      ]
+    });
+
+    myPopup.then(function (res) {
+      console.log('Tapped!', res);
+    });
+  };
 
   ///deliveries - YH 2018-02-20
 
