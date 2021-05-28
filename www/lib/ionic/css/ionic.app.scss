@@ -1,0 +1,41 @@
+﻿// your variable changes can go here
+
+$light: #fff !default;
+$stable: #f8f8f8 !default;
+$positive: #6E9ECF !default;
+$calm: #43cee6 !default;
+$balanced: #45B64A !default;
+$energized: #29ABA4 !default;
+$assertive: #EF4437 !default;
+$royal: #8a6de9 !default;
+$dark: #4e4e4e !default;
+
+$font-size-base: 18px !default;
+$font-size-large: 23px !default;
+$font-size-small: 14px !default;
+$item-font-size: 20px !default;
+
+@import "../scss/ionic.scss";
+
+// your slick styles can go here...
+// when Sass processes, both Ionic's Sass and your Sass will combine
+// into one file and saved in your app's directory as www/css/app.css
+
+.item-delete .button.icon {
+    color: inherit;
+}
+
+.item-input {
+    padding: 6px 16px 5px 16px;
+}
+
+.list-inset .item.item-input input {
+    padding-right: 0;
+}
+
+.ion-spin, .ion-loading-a, .ion-loading-b, .ion-loading-c, .ion-loading-d, .ion-looping, .ion-refreshing, .ion-ios7-reloading {
+    -webkit-animation: spin 1s infinite linear;
+    -moz-animation: spin 1s infinite linear;
+    -o-animation: spin 1s infinite linear;
+    animation: spin 1s infinite linear;
+}

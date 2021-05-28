@@ -1,0 +1,250 @@
+
+
+.card {
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  padding-bottom: 1px;
+  padding-top: 1px;
+}
+
+.item-no-border {
+  border-bottom: none;
+  border-top: none;
+}
+
+.item-energized .item-note {
+  color: #fff;
+}
+
+.item-reordering {
+  border-color: #d39211;
+  background-color: #f0b840;
+  color: #fff;
+}
+
+.item-address {
+  font-size: 25px;
+  line-height: 25px;
+}
+
+.item-quantity {
+  min-height: 80px;
+  padding-right: 110px;
+}
+
+.quantity {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  height: 100%;
+  font-size: 32px;
+}
+
+.quantity-left .quantity {
+  right: 20px;
+}
+
+.quantity-right .quantity {
+  left: 20px;
+}
+
+.quantity-circle {
+  background: #145fd7;
+  border: 3px solid #000;
+  border-radius: 38px;
+  color: #fff;
+  height: 76px;
+  min-width: 76px;
+  padding: 5px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  align-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  justify-content: center;
+  -webkit-flex-direction: column;
+  -moz-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.quantity-circle .copies {
+  font-size: 12px
+}
+
+.white-space-wrap {
+  white-space: normal;
+}
+
+.paperName {
+  color: #000;
+  font-weight: bold;
+  font-size: 25px;
+  line-height: 25px;
+}
+
+.item-instructions {
+  font-size: 20px
+}
+
+.button-delivered {
+  font-size: 35px;
+}
+
+.bar-footer.no-height {
+  height: auto;
+}
+
+.bar.no-padding {
+  padding: 0;
+}
+
+.bar-footer.no-padding .button-full {
+  /*margin-top:0;
+    margin-bottom: 0;*/
+}
+
+.item-button-left {
+  padding-left: 100px;
+}
+
+.item-button-right {
+  padding-right: 100px;
+}
+
+
+.item-button-left .button-large,
+.item-button-right .button-large {
+  top: 20px;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.routeOrderButton .button {
+}
+
+.navigate {
+  color: #aaa;
+  font-size: 15px;
+}
+/*route item list*/
+
+.routeItem {
+  /*left:0;
+    right:0;
+    height:100px;*/
+}
+
+.routeItem-new {
+  color: blue;
+}
+
+.routeItem-complaint {
+  color: red;
+}
+
+.text-small {
+  font-size: 15px;
+}
+
+.text-medium {
+  font-size: 18px;
+}
+
+#map {
+  width: 100vw;
+  height: 100vh;
+}
+
+.marker-bg {
+  width: 33px;
+  height: 45px;
+  background: url('../img/theme/marker-bg.png') no-repeat !important;
+  padding: 5px;
+  text-align: center;
+}
+
+.marker-bg.selected {
+  height: 50px;
+  background-image: url('../img/theme/marker-bg-selected.png') !important;
+  z-index: 9999;
+}
+
+#infoPanel {
+  background-color: rgba(238,238,238,0.85);
+  width: 100%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 100001;
+  display: none;
+
+  .item {
+    background: transparent;
+  }
+}
+
+.route-status-indication {
+  display: inline-block;
+  width: 19px;
+  height: 19px;
+  border: 1px solid #ccc;
+  background: green;
+  border-radius: 50%;
+  margin-left: -3px;
+}
+
+.route-status-text {
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 0 5px;
+  font-size: 16px;
+}
+
+
+.route-status-indication.route-green, .route-status-text.route-green {
+  background: #00CC33;
+  border-color: rgba(0, 204, 51, 0.7);
+  color: #fff;
+}
+
+.route-status-indication.route-red, .route-status-text.route-red {
+  background: #EC3832;
+  border-color: rgba(236, 56, 50, 0.7);
+  color: #fff;
+}
+
+.route-status-indication.route-orange, .route-status-text.route-orange {
+  background: #FB8A00;
+  border-color: rgba(251, 138, 0, 0.7);
+  color: #fff;
+}
+
+.rotate-barcode {
+  transform: ~"rotate(90deg) translateX(calc(100vh - 160px))  translateY(50px)";
+  height: ~"calc(100vh - 150px)";
+  transform-origin: top right;
+}

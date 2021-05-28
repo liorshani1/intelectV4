@@ -1,0 +1,7 @@
+{
+    "name": "intelect",
+    "type": "custom",
+    "integrations": {
+      "cordova": {}
+    }
+  }

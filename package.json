@@ -1,0 +1,19 @@
+{
+  "name": "intelect",
+  "version": "1.0.0",
+  "description": "",
+  "main": "cordova.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/liorshani1/intelectV4.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/liorshani1/intelectV4/issues"
+  },
+  "homepage": "https://github.com/liorshani1/intelectV4#readme"
+}

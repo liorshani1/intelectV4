@@ -1,0 +1,134 @@
+<ion-view title="{{ 'myTasks' | i18n}}">
+    
+
+    <ion-content >
+        <ion-refresher pulling-text="Pull to refresh..." refreshing-icon="ion-load-c ion-spin"
+                       on-refresh="doRefresh()">
+        </ion-refresher>
+        <div ng-show="!online">network is not avilable </div>
+
+
+      
+
+
+        <div class="list" ng-if="(!data.Routes || !data.Routes.length) && (!data.Districts || !data.Districts.length) && (!data.DeliveryRoutes || !data.DeliveryRoutes.length)">
+            <div class="item  item-dark white-space-wrap" >
+                {{'noTasks' | i18n}}
+
+            </div>
+        </div>
+
+      
+        <!--Routes for Distribution-->
+        <div class="list card" data-ng-repeat="route in data.Routes  | filter:{ IsForDelivery: false }" >
+
+            <div class="item item-stable item-icon-{{appSide}} item-positive ">
+                <i class="icon ion-paper-airplane"></i>
+                <div class="white-space-wrap">{{ route.RouteName + (route.Part? "(" + route.Part + ")":"")  }}</div>
+                <span class="">{{route.DistributionDate | referenceDate}}</span>
+            </div>
+
+            <div class="item item-icon-{{appSide}}">
+                <i class="icon ion-pull-request"></i>
+                {{'stops' | i18n}}
+                {{ route.StopsDelivered}}/{{route.StopsTotal}}
+            </div>
+            <div class="item item-icon-{{appSide}}">
+                <i class="icon ion-clock"></i>
+                {{'startTime' | i18n}}
+                {{ route.StartTime | referenceTime}}
+            </div>
+
+            <div class=" button-bar bar-dark">
+                <button ng-if="route.StartTime" class="button" data-ng-click="routeContinue(route.DistributionId, route.RouteId, route.Part )">
+                    <i class="icon ion-play"></i>
+                    {{'continue' | i18n}}
+                </button>
+                <button ng-if="!route.StartTime" class="button  " data-ng-click="routeStart(route.DistributionId, route.RouteId, route.Part )">
+                    <i class="icon ion-play"></i>
+                    {{'start' | i18n}}
+                </button>
+                <button class="button" data-ng-click="reorderRoute(route.DistributionId, route.RouteId, route.Part )">
+                    <i class="icon ion-drag"></i>
+                    {{'prepare' | i18n}}
+                </button>
+            </div>
+
+        </div>
+
+      <!--Routes For Delivery-->
+      <div class="list " ng-if="data.DeliveryRoutes && data.DeliveryRoutes.length" >
+
+        <!--<label class="item item-input item-select item-dark">
+          <div class="input-label">
+            הצג משלוחים
+          </div>
+          <select ng-change="setDeliveryFilter(deliveryFilter)" ng-model="deliveryFilter" >
+            <option value="active">פעילים</option>
+            <option value="completed">הסתיימו</option>
+            <option value="all">הכל</option>
+          </select>
+        </label>-->
+        <div class=" " data-ng-repeat="route in filteredDeliveryRoutes " >
+
+          <div  class="item item-icon-{{appSide}} item-button-{{appOside}} item-stable "   data-ng-click="deliveryRouteSelected(route )" >
+            <i class="icon ion-paper-airplane"></i>
+            <div class="white-space-wrap">{{ route.RouteName + (route.Part? "(" + route.Part + ")":"")  }}</div>
+            <span class="">{{route.DistributionDate | referenceDate}}</span>
+            <div>
+              {{route.StopsTotal}} {{'packages' | i18n}}
+            </div>
+            <!--<button ng-if="route.StartTime" class="button button-positive" data-ng-click="routeContinue(route.DistributionId, route.RouteId, route.Part )">
+              <i class="icon ion-cube"></i>
+            </button>
+            <button ng-if="!route.StartTime" class="button button-positive  " data-ng-click="routeStart(route.DistributionId, route.RouteId, route.Part )">
+              <i class="icon ion-cube"></i>
+            </button>
+            <button class="button button-positive" data-ng-click="reorderRoute(route.DistributionId, route.RouteId, route.Part )" style="top:48px">
+              <i class="icon ion-edit"></i>
+            </button>-->
+
+          </div>
+          
+        </div>
+      </div>
+
+        <div class="list card" data-ng-repeat="district in data.Districts" data-ng-click="districtShow(district.DistributionId, district.DistrictId)">
+
+            <div class="item item-icon-{{appSide}} item-energized  ">
+                <i class="icon ion-earth"></i>
+                <div class="white-space-wrap">{{'district' | i18n}} {{ district.DistrictName }}</div>
+                <span class="">{{district.DistributionDate | referenceDate}}</span>
+            </div>
+
+            <div class="item item-icon-{{appSide}}">
+                <i class="icon ion-pull-request"></i>
+                {{'stops' | i18n}}
+                {{ district.StopsDelivered}}/{{district.StopsTotal}}
+            </div>
+            <div class="item item-icon-{{appSide}}">
+                <i class="icon ion-paper-airplane"></i>
+                {{'routes' | i18n}}
+                {{ district.RouteStarted}}/{{district.RoutesTotal}}
+            </div>
+
+        </div>
+      <div style="padding:15px;"></div>
+    </ion-content>
+  <div class="tabs-icon-top">
+      <div class="tabs tabs-positive">
+          <!--HS [2018-apr-25] - Home - Added scan lable for type barcode to scan function - add lable for type to scan -->
+          <!--HS [2018-apr-24] - Home - Added scan lable for type to scan - add lable for type to scan  -->
+          <a class="tab-item" data-ng-click="scanBarcodeByType()">
+              <i class="icon ion-ios-barcode-outline"></i>
+              <span class="tab-title ng-binding">הקלד</span>
+          </a>
+          
+          <a class="tab-item" data-ng-click="scanBarcode()">
+              <i class="icon ion-ios-barcode-outline"></i>
+              <span class="tab-title ng-binding">סרוק ברקוד</span>
+          </a>
+          
+      </div>
+  </div>
+</ion-view>

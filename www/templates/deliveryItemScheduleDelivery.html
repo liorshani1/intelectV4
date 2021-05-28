@@ -1,0 +1,47 @@
+<div style="direction:rtl;">
+
+  <div class="item " >
+    <label>
+      תאריך
+    </label>
+  </div>
+  <ion-list>
+    <ion-radio ng-repeat="d in scheduledDate.availableDate" ng-model="scheduledDate.date" ng-value="{{'d.value'}}">{{d.display}}</ion-radio>
+  </ion-list>
+
+
+  
+  <div class="list" style="margin-top:10px;">
+    <div class="item " >
+      <label>
+        שעה
+        <input type="text" ng-model="scheduledDate.time" />
+      </label>
+    </div>
+
+    <div class="item range range-positive">
+      <span >0</span>
+      <input type="range" name="volume" min="0" max="23"   ng-model="scheduledDate.hour" ng-change="refreshScheduledTime();">
+      <span>23</span>
+    </div>
+    <div class="item range range-positive">
+      <span>0</span>
+      <input type="range" name="volume" min="0" max="59" step="5" ng-model="scheduledDate.minute" ng-change="refreshScheduledTime();">
+      <span>59</span>
+    </div>
+  </div>
+
+  
+
+  <div class="item">
+    <label>
+      הערות
+      <textarea ng-model="scheduledDate.notes" rows="5"></textarea>
+    </label>
+  </div>
+
+</div>
+
+
+
+

@@ -1,0 +1,48 @@
+﻿<ion-view title="{{ 'delivery' | i18n}}">
+    <ion-content>
+
+        <div id="map" data-tap-disabled="true" resize=""> </div>
+        <div id="infoPanel" class="list">
+            <div class="item item-stable item-icon-{{appOside}}" data-ng-click="reorderRoute(routeSelected.DistributionId, routeSelected.RouteId, routeSelected.Part )">
+                <i class="icon ion-chevron-left " ng-class="ion-chevron-{{appOside}}"></i>
+                <div class="white-space-wrap">{{ routeSelected.RouteName + (routeSelected.Part? "(" + routeSelected.Part + ")":"")  }} - <span class="bold">{{ routeSelected.DisplayName}}</span> </div>
+                <div class="row">
+                    <div class="col" ng-class="{'assertive': routeSelected.StopsDelivered == 0}">
+                        <i class="ion-pull-request"></i>
+                        {{ routeSelected.StopsDelivered}}/{{routeSelected.StopsTotal}}
+                    </div>
+
+                </div>
+                <div class="row" ng-class="{'assertive': !routeSelected.StartTime }">
+                    <div class="col">
+
+
+                        <i class="ion-clock"></i>
+                        <span ng-if="routeSelected.EndTime" class="route-status-text route-green">{{'completed' | i18n}} {{ routeSelected.EndTime | fromNow}}</span>
+                        <span ng-if="!routeSelected.EndTime">
+                            <span ng-if="routeSelected.LastDeliveryTime" class="route-status-text {{routeSelected.LastDeliveryTime | fromNowClassName }}">{{ routeSelected.LastDeliveryTime | fromNow}}</span>
+                            <span ng-if="!routeSelected.LastDeliveryTime && routeSelected.StartTime" class="route-status-text {{routeSelected.StartTime | fromNowClassName }}">{{ routeSelected.StartTime | fromNow}}</span>
+                            <span ng-if="!routeSelected.LastDeliveryTime && !routeSelected.StartTime">{{'na' | i18n}}</span>
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!--<div class="mapImgInfo">
+                <img class="imgProvider" data-ng-src="{{ contentBaseUrl + '/banner40/' + locationSelected.OrganizationId + '.png' }}">
+            </div>
+            <div class="row-padding-small">
+                <div class="row">
+                    <div class="width100">
+                        <div class="borderShadow">
+                            <div location-info-panel location="locationSelected" select="locationSelect" show-clock="true" show-naviage="false"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+
+        </div>
+    </ion-content>
+</ion-view>
+

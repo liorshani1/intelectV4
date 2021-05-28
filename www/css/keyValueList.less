@@ -1,0 +1,59 @@
+.key-value-list {
+  line-height: 24px;
+
+  > div {
+    border-bottom: 1px solid #f2f2f2;
+    padding: 4px 0;
+  }
+
+
+
+  .key {
+    color: #999;
+    font-size: 15px;
+    display: inline-block;
+    min-width: 30%;
+    vertical-align: top;
+  }
+
+  .value {
+    color: #222;
+    font-size: 19px;
+    display: inline-block;
+    max-width: 70%;
+    white-space: normal;
+    vertical-align: top;
+
+    &.limit-height {
+      max-height: 55px;
+      overflow: auto;
+    }
+
+    &.not-important {
+      color: #999;
+      font-size: 15px;
+    }
+  }
+
+  .item-assertive {
+    .key, .value {
+      color: #fff;
+    }
+  }
+
+  &.lines {
+    .key {
+      display: block;
+    }
+
+    .value {
+      display: block;
+    }
+  }
+
+  .item-dark {
+    .key, .value {
+      color: #FFF;
+    }
+  }
+}

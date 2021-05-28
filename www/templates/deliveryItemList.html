@@ -1,0 +1,97 @@
+
+<ion-view title="{{data.routeName}} - {{ 'filter-' + filter | i18n}}">
+
+
+    <ion-content>
+      <ion-refresher pulling-text="Pull to refresh..." refreshing-icon="ion-load-c ion-spin"
+                     on-refresh="doRefresh()">
+      </ion-refresher>
+      <!--<label class="item item-input item-select  item-dark">
+        <div class="input-label">
+          הצג משלוחים
+        </div>
+        <select ng-change="setDeliveryFilter(deliveryFilter)" ng-model="deliveryFilter">
+          <option value="active">פעילים</option>
+          <option value="completed">הסתיימו</option>
+          <option value="all">הכל</option>
+        </select>
+      </label>-->
+
+        <div class="list filter-{{filter}}">
+            <div ng-repeat="item in visibleData"
+                 class="item item-icon-{{appSide}}  item-icon-{{appOside}} routeItem"
+                 ng-class="{'item-energized': item.DistributionItemId == selectedItemId }">
+                <div ng-click="showItem(item)">
+
+                    <i class="icon ion-chevron-left " ng-class="ion-chevron-{{appOside}}"></i>
+                    <i class="icon " ng-class="{'assertive': item.Position == 0 }">{{ item.Position}}</i>
+                    <span class="item-note ">{{" #" + ($index + 1)}} &nbsp;</span>
+                    <div  class="white-space-wrap dark text-medium  ">{{   (item.FirstName || "") + " " + (item.LastName || "") }}</div>
+                    <div class="white-space-wrap bold">{{  item.StreetName + " " + item.StreetNumber + ", " + item.City }}</div>
+                    <span ng-if="item.Entrance">{{'entrance' | i18n }}: </span><span class="bold">{{item.Entrance  }}</span>
+                    <span ng-if="item.Floor">{{'floor' | i18n }}: </span><span class="bold">{{item.Floor  }}</span>
+                    <span ng-if="item.Apartment">{{'apartment' | i18n }}: </span><span class="bold">{{item.Apartment  }}</span>
+
+                      <span class="value">{{  item.DeliveryItem.DeliveryItemCode }} <span class="value" style="background-color:{{item.DeliveryItem.StatusColor}}" class="value">{{  item.DeliveryItem.CurrentStatusName}}</span></span>
+                    <div ng-if="item.DeliveryItem.ScheduledDeliveryDate" >
+                      <span class="key">{{'ScheduledDeliveryDate' | i18n}}</span>
+                      <span class="value" style="direction:ltr;text-align:right;">{{ item.DeliveryItem.ScheduledDeliveryDateDisplay}}</span>
+                    </div>
+                    
+                    
+                    <small ng-show="item.DeliveryTime" class="white-space-wrap balanced"><i class="ion-checkmark"></i>  {{'DeliverdOn' | i18n }} {{  item.DeliveryTime  | referenceTime}}</small>
+                  </div>
+                <div class="routeOrderButton" ng-if="filter=='reorder'">
+                    <button class="button   button-balanced"
+                            data-ng-click="reorderItem(item, $index, $index+1,$event)">
+                        <i class="icon ion-arrow-down-c"></i>
+                    </button>
+                    <button class="button  button-assertive"
+                            data-ng-click="reorderItem(item, $index, $index-1,$event)">
+                        <i class="icon ion-arrow-up-c"></i>
+                    </button>
+                    <button class="button button-positive"
+                            data-ng-click="setItemOrder(item,$event)">
+                        <i class="icon ion-edit"></i>
+                    </button>
+                </div>
+            </div>
+
+     
+            
+         
+
+        </div>
+      <div style="padding:15px;"></div>
+    </ion-content>
+
+  <div class="tabs-icon-top">
+    <div class="tabs tabs-positive ">
+      <a class="tab-item "
+         data-ng-click="scanBarcode()">
+        <i class="icon ion-ios-barcode-outline"></i>
+        <span class="tab-title">{{'scanBarcode' | i18n}}</span>
+      </a>
+
+      <!--HS [2018-may-11] - Delivery Item Page - Added scan lable for type to scan - add lable for type to scan  -->
+      <a class="tab-item" 
+      data-ng-click="scanBarcodeByType()">
+        <i class="icon ion-ios-barcode-outline"></i>
+        <span class="tab-title">הקלד</span>
+     </a>
+
+      <a class="tab-item "
+         data-ng-click="setFilter('reorder')">
+        <i class="icon " ng-class="(filter=='reorder'?'ion-ios-download':'ion-ios-download-outline')"></i>
+        <span class="tab-title">{{'order' | i18n }} </span>
+      </a>
+      <a class="tab-item "
+         data-ng-click="setFilter('list')">
+        <i class="icon " ng-class="(filter=='list'?'ion-ios-list':'ion-ios-list-outline')"></i>
+        <span class="tab-title">{{'list' | i18n }} </span>
+      </a>
+    </div>
+  </div>
+
+  
+</ion-view>

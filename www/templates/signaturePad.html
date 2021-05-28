@@ -1,0 +1,16 @@
+<div id='signatureCanvasPopup'  style="direction:rtl;" ng-controller="signaturePadController">
+
+  <canvas id='signatureCanvas' width='300' height='180' style='border: 1px solid black;margin:5px;'></canvas>
+  <div class='button-bar'>
+    <a class='button button-dark' ng-click='clearCanvas()'>נקה</a>
+    <a class='button button-positive' ng-click='saveCanvas()'>שמור</a>
+  </div>
+  <br>
+  <div class="item item-stable">החתימה הנוכחית</div>
+  <div class="item "><img ng-src='{{signature}}' /></div>
+  
+</div>
+
+
+
+

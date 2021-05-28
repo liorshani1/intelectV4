@@ -1,0 +1,22 @@
+
+<ion-view title="{{ 'notifications' | i18n }}">
+
+    <ion-content>
+        <ion-refresher pulling-text="Pull to refresh..." refreshing-icon="ion-load-c ion-spin" on-refresh="doRefresh()">
+        </ion-refresher>
+
+        <div class="list">
+            <div ng-repeat="item in notifications" class="item item-icon-{{appSide}} item-icon-{{appOside}} notification-item-left notification-item-right">
+                <div>
+                    <i class="icon ion-close-round" data-ng-click="remove($index, item)"></i>
+                    <span class="item-note dark text-medium">{{" #" + ($index + 1)}} &nbsp;</span>
+                    <div class="white-space-wrap dark text-medium" ng-if="item.NotificationTypeId==1">{{ item.SkipTime | shortDate }}</div>
+                    <div class="white-space-wrap dark text-medium" ng-if="item.NotificationTypeId==2">{{ item.LastDeliveryTime | shortDate }}</div>
+                    <div class="white-space-wrap dark text-medium">{{ item.NotificationText }}</div>
+                </div>
+            </div>
+        </div>
+
+    </ion-content>
+
+</ion-view>

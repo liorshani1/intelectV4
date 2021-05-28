@@ -1,0 +1,82 @@
+<ion-view title="{{ 'myTasks' | i18n}}">
+
+
+    <ion-content>
+        <ion-refresher pulling-text="Pull to refresh..."
+                       on-refresh="reload()">
+        </ion-refresher>
+        <div ng-show="!online">network is not avilable </div>
+
+        <div class="list" ng-if="(!data.routes || !data.routes.length)">
+            <div class="item  item-dark white-space-wrap">
+                {{'noRoutes' | i18n}}
+
+            </div>
+        </div>
+
+
+        <div class="list " >
+            
+            <!--<a class="item item-energized item-icon-{{appOside}}" href="#/app/map" ng-if="(data.routes && data.routes.length)">
+                <i class="icon ion-map"></i>{{'showOnMap' | i18n}}
+            </a>-->
+            <!--<div class="item item-stable item-icon-{{appOside}}" data-ng-repeat="route in data.routes" data-ng-click="reorderRoute(route.DistributionId, route.RouteId, route.Part )">-->
+            <div data-ng-repeat="route in data.routes">
+                <div class="item item-stable item-icon-{{appOside}}" data-ng-click="reorderRoute(route.DistributionId, route.RouteId, route.Part )">
+                    <i class="icon ion-chevron-left " ng-class="ion-chevron-{{appOside}}"></i>
+                    <div class="white-space-wrap">{{ route.RouteName + (route.Part? "(" + route.Part + ")":"")  }} - <span class="bold">{{ route.DisplayName}}</span> </div>
+                    <div class="row">
+                        <div class="col" ng-class="{'assertive': route.StopsDelivered == 0}">
+                            <i class="ion-pull-request"></i>
+                            {{ route.StopsDelivered}}/{{route.StopsTotal}}
+                        </div>
+
+                    </div>
+                    <div class="row" ng-class="{'assertive': !route.StartTime }">
+                        <div class="col">
+
+
+                            <i class="ion-clock"></i>
+                            <span ng-if="route.EndTime" class="route-status-text route-green">{{'completed' | i18n}} {{ route.EndTime | fromNow}}</span>
+                            <span ng-if="!route.EndTime">
+                                <span ng-if="route.LastDeliveryTime" class="route-status-text {{route.LastDeliveryTime | fromNowClassName }}">{{ route.LastDeliveryTime | fromNow}}</span>
+                                <span ng-if="!route.LastDeliveryTime && route.StartTime" class="route-status-text {{route.StartTime | fromNowClassName }}">{{ route.StartTime | fromNow}}</span>
+                                <span ng-if="!route.LastDeliveryTime && !route.StartTime">{{'na' | i18n}}</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class=" button-bar bar-dark">
+                    <button ng-if="route.StartTime" class="button" data-ng-click="routeContinue(route.DistributionId, route.RouteId, route.Part )">
+                        <i class="icon ion-play"></i>
+                        {{'continue' | i18n}}
+                    </button>
+                    <button ng-if="!route.StartTime" class="button  " data-ng-click="routeStart(route.DistributionId, route.RouteId, route.Part )">
+                        <i class="icon ion-play"></i>
+                        {{'start' | i18n}}
+                    </button>
+                    <button class="button" data-ng-click="reorderRoute(route.DistributionId, route.RouteId, route.Part )">
+                        <i class="icon ion-drag"></i>
+                        {{'prepare' | i18n}}
+                    </button>
+                </div>
+
+            </div>
+
+            <!--<div class=" button-bar bar-dark">
+                <button class="button" data-ng-click="routeContinue(route.DistributionId, route.RouteId, route.Part )">
+                    <i class="icon ion-play"></i>
+                    {{'stops' | i18n}}
+                </button>
+                <button class="button" data-ng-click="reorderRoute(route.DistributionId, route.RouteId, route.Part )">
+                    <i class="icon ion-drag"></i>
+                    {{'prepare' | i18n}}
+                </button>
+            </div>-->
+
+        </div>
+
+
+    </ion-content>
+
+</ion-view>

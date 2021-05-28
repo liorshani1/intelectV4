@@ -1,0 +1,122 @@
+<ion-view title="{{ 'delivery' | i18n}}">
+
+   
+
+    <ion-content>
+        <div ng-if="item">
+            <div class="item item-assertive padding-vertical" ng-if="item.complaints && item.complaints.length">
+                <div data-ng-repeat="complaint in item.complaints">
+                    <i class="icon ion-alert "></i>  <small class=" white-space-wrap">{{  complaint.DateCreated  | shortDate}} [{{  complaint.ComplaintTypeName }}] - {{  complaint.Comments }}</small>
+                </div>
+            </div>
+
+            <div class="item  item-no-border item-address">
+
+                <div class="white-space-wrap ">
+                    <span ng-class="{'assertive': item.Position == 0 }">{{ "#" + (currenItemIndex + 1)}}</span>
+                    {{ (item.FirstName || "") + " " + (item.LastName || "")}}
+                    <span ng-if="item.DeliveryItemId == null">{{ item.SubscriberId }}</span>
+                </div>
+
+                <div class="white-space-wrap bold">{{  item.StreetName + " " + item.StreetNumber + ", " + item.City }}</div>
+                <span ng-if="item.Entrance">{{'entrance' | i18n }}: </span><span class="bold">{{item.Entrance  }}</span>
+                <span ng-if="item.Floor">{{'floor' | i18n }}: </span><span class="bold">{{item.Floor  }}</span>
+                <span ng-if="item.Apartment">{{'apartment' | i18n }}: </span><span class="bold">{{item.Apartment  }}</span>
+                <div class="white-space-wrap text-medium" ng-if="item.EntranceInstructions">{{'entranceInstructions' | i18n }}: <span class="bold">{{item.EntranceInstructions  }}</span></div>
+                <div class="white-space-wrap text-medium" ng-if="item.EntranceCode">{{'entranceCode' | i18n }}: <span class="bold">{{item.EntranceCode  }}</span></div>
+
+            </div>
+
+            <div class="item  item-quantity quantity-{{appOside}} item-no-border" ng-if="item.DeliveryItemId == null">
+                <div class="white-space-wrap paperName">{{ "[" + item.PublicationCode + "] "  }}</div>
+                <div class="white-space-wrap paperName">{{  item.PublicationName }}</div>
+                <div class="quantity" >
+                    <div class="quantity-circle" >
+                        <div>
+                            {{item.Quantity}}
+                        </div>
+                        <div class="copies">
+                            {{'copies' | i18n }}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="item   item-no-border" ng-if="item.DeliveryItemId > 0">
+                <div class="white-space-wrap paperName">{{ item.PublicationCode  }}</div>
+            </div>
+            
+            <div class="item item-no-border " ng-if="enableDelivery">
+                <!--<div class="list card" ng-show="imgURI != 'http://placehold.it/300x300'">
+                    <div class="item item-image">
+                        <img id="myImage" ng-src="{{imgURI}}">
+                    </div>
+                </div>-->
+                <!--<div class="pading">
+                    <button class="button" ng-click="takePicture()">Take Picture</button>
+                </div>-->
+
+              <button ng-if="item.DeliveryItemId > 0" class="button button-large button-outline button-balanced button-block "
+                      data-ng-click="goToDeliveryItem()">
+               עבור לפריט
+              </button>
+
+                <button ng-if="item.DeliveryItemId == null" ng-show="!(item.complaints && item.complaints.length) && (!item.DeliveryTime)" class="button button-large button-balanced button-block button-delivered "
+                        data-ng-click="deliverAndGetNextItem()">
+                    {{'delivered' | i18n }}
+                </button>
+                <button ng-show="(item.complaints && item.complaints.length) && (!item.DeliveryTime)" class="button button-large button-balanced button-block button-delivered "
+                        data-ng-click="takePicture()">
+                    {{'photographerDelivery' | i18n }}
+                </button>
+                <div>
+                    <small ng-show="item.DeliveryTime" class="white-space-wrap">{{'DeliverdOn' | i18n }} {{  item.DeliveryTime  | referenceTime}}</small>
+                </div>
+                <button ng-if="item.DeliveryItemId == null" ng-show="item.DeliveryTime" class="button button-large button-assertive button-clear   "
+                        data-ng-click="undeliver()">
+                    {{'undeliver' | i18n }}
+                </button>
+            </div>
+            <div class="item item-energized item-instructions" ng-show="item.Instructions">
+                <small class="white-space-wrap bold">{{  item.Instructions }}</small>
+            </div>
+
+        </div>
+
+    </ion-content>
+
+    <div class="tabs-icon-top" >
+        <div class="tabs">
+            <a class="button button-clear button-dark tab-item tab-item-active"
+               data-ng-click="moveToNextItem()">
+                <i class="icon ion-skip-forward"></i>
+                <span class="tab-title" ng-if="item.DeliveryTime">{{'next' | i18n}}</span>
+                <span class="tab-title" ng-if="!item.DeliveryTime">{{'skip' | i18n}}</span>
+            </a>
+
+            <!--<a ng-if="item" class="button button-clear button-dark tab-item tab-item-active"
+               ng-href="waze://?q={{item | navigationAddress}}&navigate=yes" class="navigate ">
+                <i class="icon ion-navigate"></i>
+                <span class="tab-title">{{'navigate' | i18n}}</span>
+            </a>-->
+            <a ng-if="item" class="button button-clear button-dark tab-item tab-item-active"
+               data-ng-click="openNavigation(item )" class="navigate ">
+                <i class="icon ion-navigate"></i>
+                <span class="tab-title">{{'navigate' | i18n}}</span>
+            </a>
+            <a class="button button-clear  tab-item tab-item-active" ng-class="(commentSuccess? 'button-positive': 'button-dark')"
+               data-ng-click="addComment()">
+                <i class="icon ion-edit "></i>
+                <span class="tab-title">{{'addComment' | i18n }}</span>
+            </a>
+            <a class="button button-clear  button-dark tab-item tab-item-active"
+               data-ng-click="moveToPrevItem()">
+                <i class="icon ion-skip-backward"></i>
+                <span class="tab-title">{{'back' | i18n }}</span>
+            </a>
+        </div>
+    </div>
+
+
+
+</ion-view>

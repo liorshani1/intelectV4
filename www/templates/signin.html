@@ -1,0 +1,62 @@
+<ion-view view-title="Sign-In">
+    <ion-nav-bar class="bar-positive"></ion-nav-bar>
+    <ion-content>
+
+        <div ng-show="currentTab == 'password'">
+
+            <div class="list list-inset">
+                <label class="item item-input">
+                    <input dir="ltr" type="text" ng-model="user.username" placeholder="{{'username' | i18n }}">
+                </label>
+                <label class="item item-input">
+                    <input dir="ltr" type="password" ng-model="user.password" placeholder="{{'password' | i18n }}">
+                </label>
+                <button class="button button-block button-positive" ng-click="signIn(user)" data-i18n="signin"></button>
+
+                <p class="text-center">
+                    <a href="#" data-i18n="forgotpassword" ng-click="forgotPassword()"></a>
+                </p>
+            </div>
+        </div>
+        <div ng-show="currentTab == 'sms'">
+
+            <div class="list list-inset">
+                <label class="item item-input">
+                    <input dir="ltr" type="tel" ng-model="sms.phonenumber" placeholder="{{'phonenumber' | i18n }}">
+                </label>
+                <button class="button button-block button-positive" ng-click="getToken(sms)" data-i18n="getToken"></button>
+                <label class="item item-input">
+                    <input dir="ltr" type="tel" ng-model="sms.token" placeholder="{{'signincode' | i18n }}">
+                </label>
+                <button class="button button-block button-positive" ng-click="signInWithSMS(sms)" data-i18n="signin"></button>
+            </div>
+        </div>
+        
+        <div class="padding">
+            <span>
+                {{message}}
+            </span>
+        </div>
+        <div class="padding item-note">
+            {{appVersion}}
+        </div>
+    </ion-content>
+
+
+    <div class="tabs-icon-top">
+        <div class="tabs">
+            <a class="button button-clear tab-item tab-item-active " ng-class="(currentTab == 'sms'?'button-balanced':'button-dark')"
+               data-ng-click="setCurrentTab('sms')">
+                <i class="icon " ng-class="(currentTab == 'sms'?'ion-ios-chatboxes':'ion-ios-chatboxes-outline')"></i>
+                <span class="tab-title">{{'signinwithsms' | i18n }} </span>
+            </a>
+            <a class="button button-clear tab-item tab-item-active" ng-class="(currentTab == 'password'?'button-balanced':'button-dark')"
+               data-ng-click="setCurrentTab('password')">
+                <i class="icon " ng-class="(currentTab == 'password'?'ion-ios-grid-view':'ion-ios-grid-view-outline')"></i>
+                <span class="tab-title">{{'signinwithpassword' | i18n}}</span>
+            </a>
+
+        </div>
+    </div>
+
+</ion-view>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <meta http-equiv="Content-Security-Policy" content="default-src gap: file://* *; script-src 'self' 'unsafe-inline' 'unsafe-eval' *; style-src  'self' 'unsafe-inline' *;img-src 'self' https://csi.gstatic.com data:;connect-src 'self' http://192.168.1.18:8888 https://ssl.gstatic.com https://build.phonegap.com http://intelectsb.cloudapp.net https://apps.intelect.co.il http://192.168.1.222:81 http://localhost:81 http://127.0.0.1:81 http://placehold.it content://media/external/images/media *">
+    <title></title>
+
+    <link rel="manifest" href="manifest.json">
+
+    <!-- un-comment this code to enable service worker
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('service-worker.js')
+          .then(() => console.log('service worker installed'))
+          .catch(err => console.log('Error', err));
+      }
+    </script>-->
+
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css" rel="stylesheet">
+    -->
+
+    <!-- ionic/angularjs js -->
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <script src="js/ng-cordova.min.js"></script>
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="cordova.js"></script>
+    <script src="scripts/central.util.js"></script>
+    <script src="scripts/moment-with-locales.min.js"></script>
+    <script src="scripts/lodash.compat.min.js"></script>
+    <script src="scripts/JsBarcode.all.min.js"></script>
+    <script src="scripts/angular-barcode.js"></script>
+    <script src="scripts/signature_pad.min.js"></script>
+
+    <!-- your app's js -->
+    <script src="js/app.js"></script>
+    <script src="js/controller/signinController.js"></script>
+    <script src="js/controller/menuController.js"></script>
+    <script src="js/controller/homeController.js"></script>
+    <script src="js/controller/routeOrderController.js"></script>
+    <script src="js/controller/deliveryController.js"></script>
+    <script src="js/controller/deliveryItemController.js"></script>
+    <script src="js/controller/routeItemController.js"></script>
+    <script src="js/controller/aboutController.js"></script>
+    <script src="js/controller/changePasswordController.js"></script>
+    <script src="js/controller/districtController.js"></script>
+    <script src="js/controller/mapController.js"></script>
+    <script src="js/controller/notificationController.js"></script>
+    <script src="js/controller/deliveryItemListController.js"></script>
+    <script src="js/controller/signaturePadController.js"></script>
+    <!--Modules-->
+    <script src="js/modules/geolocation.js"></script>
+
+
+    <script src="js/services/angular-local-storage.js"></script>
+    <!--<script src="js/services/geolocationService.js"></script>-->
+    <script src="js/services/localizeService.js"></script>
+    <script src="js/services/loaderService.js"></script>
+    <script src="js/services/districtService.js"></script>
+    <script src="js/services/signaturePadService.js"></script>
+
+    <script src="js/services/userService.js"></script>
+    <script src="js/services/assignmentsService.js"></script>
+    <script src="js/services/routeService.js"></script>
+    <script src="js/services/initRouteService.js"></script>
+    <script src="js/services/routeOrderStateService.js"></script>
+    <script src="js/directives/autoFocus.js"></script>
+    <script src="js/services/notificationService.js"></script>
+    <script src="js/services/multiplePopupService.js"></script>
+    <script src="js/services/deliveryItemService.js"></script>
+
+    <script src="js/filters.js"></script>
+    <script src="js/interceptor/responseObserver.js"></script>
+  </head>
+
+  <body ng-app="myApp"  >
+    <ion-nav-view></ion-nav-view>
+  </body>
+</html>

@@ -1,0 +1,150 @@
+<ion-view title="{{ 'delivery' | i18n}}">
+
+
+
+  <ion-content>
+    <ion-refresher pulling-text="Pull to refresh..." refreshing-icon="ion-load-c ion-spin"
+                   on-refresh="doRefresh()">
+    </ion-refresher>
+    <div ng-if="item ">
+
+
+      <div class="item item-no-border">
+        <div class="key-value-list ">
+          <div ng-if="item.ScheduledDeliveryDate" class="item item-dark">
+            <span class="key">{{'ScheduledDeliveryDate' | i18n}}</span>
+            <span class="value" style="direction:ltr;text-align:right;">{{ item.ScheduledDeliveryDateDisplay}}</span>
+          </div>
+          <div ng-if="item.AmountToCollect && item.AmountToCollect > 0 " class="item item-assertive">
+            <span class="key">גוביינא</span>
+            <span class="value">{{item.AmountToCollect}}</span>
+          </div>
+          <div>
+            <span class="key">קוד משלוח</span>
+            <span class="value">{{  item.DeliveryItemCode }} <span class="value" style="background-color:{{  item.StatusColor}}" class="value">{{  item.CurrentStatusName}}</span></span>
+          </div>
+          
+          <div>
+            <span class="key">שם</span>
+            <span class="value">{{ (item.SubscriberFirstName || "") + " " + (item.SubscriberLastName || "")}}</span>
+          </div>
+          <div ng-if="item.Subscriber.Phone1">
+            <span class="key">טלפון</span>
+            <span class="value "  style="direction:ltr;">
+              <a href="tel:{{item.Subscriber.Phone1  }}">{{item.Subscriber.Phone1  }}</a>
+            </span>
+          </div>
+          <div ng-if="item.Subscriber.Phone2">
+            <span class="key">טלפון</span>
+            <span class="value " style="direction:ltr;">
+              <a href="tel:{{item.Subscriber.Phone2  }}">{{item.Subscriber.Phone2  }}</a>
+            </span>
+          </div>
+
+          <div>
+            <span class="key">כתובת</span>
+            <span class="value">{{  item.StreetName + " " + (item.StreetNumber?item.StreetNumber:'') + ", " + item.City }}</span>
+          </div>
+          <div ng-if="item.Subscriber.OriginalAddress" >
+            <span class="key">כתובת מקורית</span>
+            <span class="value limit-height not-important">{{item.Subscriber.OriginalAddress.StreetNumber  }} {{item.Subscriber.OriginalAddress.StreetName }}{{item.Subscriber.OriginalAddress.City   }}</span>
+          </div>
+          <div ng-if="item.Entrance">
+            <span class="key">{{'entrance' | i18n }}</span>
+            <span class="value">{{item.Entrance  }}</span>
+          </div>
+          <div ng-if="item.Floor">
+            <span class="key">{{'floor' | i18n }}</span>
+            <span class="value">{{item.Floor  }}</span>
+          </div>
+          <div ng-if="item.Apartment">
+            <span class="key">{{'apartment' | i18n }}</span>
+            <span class="value">{{item.Apartment  }}</span>
+          </div>
+          <div ng-if="item.EntranceInstructions">
+            <span class="key">{{'entranceInstructions' | i18n }}</span>
+            <span class="value">{{item.EntranceInstructions  }}</span>
+          </div>
+          <div ng-if="item.EntranceCode">
+            <span class="key">{{'entranceCode' | i18n }}</span>
+            <span class="value">{{item.EntranceCode  }}</span>
+          </div>
+          <div>
+            <span class="key">קו <a href="" ng-click="toggleRouteDetails()" >{{'showMore' | i18n}} </a> </span>
+            <span class="value">{{  item.RouteCode  || "[לא משובץ לקו]"}}</span>
+          </div>
+          <div  ng-if="showRouteDetails">
+            <span class="key">נ. פריקה</span>
+            <span class="value">{{  item.DropOffSubscriberFirstName }} {{  item.DropOffSubscriberLastName}}</span>
+          </div>
+          <div>
+            <span class="key">נמצא אצל</span>
+            <span class="value">{{item.HeldByUserName}}</span>
+          </div>
+          
+
+          <div>
+            <span class="key">הערות</span>
+            <span class="value limit-height">{{item.Comments}}</span>
+
+          </div>
+          <div>
+            <span class="key"><a href=""  ng-click="showBarcode();">{{'showBarcode' | i18n}} </a></span>
+
+          </div>
+        </div>
+
+      </div>
+
+      <div class="item item-no-border item-assertive white-space-wrap text-medium" ng-if="item.ParentDeliveryItemId>0">
+        חבילה זו נמצא כרגע בתוך שק מספר 
+        {{item.ParentDeliveryItemId}}
+        ולא ניתן לבצע פעולות על חבילה זו עד שהשק יפוצץ
+      </div>
+      <div class="item item-no-border" >
+        <button ng-repeat="transition in transitions" ng-click="selectTransition(transition)" class="button  deliveryActionDisplay deliveryActionDisplay_{{transition.ActionDisplay}}" >{{transition.Action}}</button>
+      </div>
+
+
+      
+
+
+    </div>
+
+  </ion-content>
+
+  <div class="tabs-icon-top">
+    <div class="tabs tabs-positive">
+      <a class="tab-item "
+         data-ng-click="scanBarcode()" >
+        <i class="icon ion-ios-barcode-outline"></i>
+        <span class="tab-title">{{'scanBarcode' | i18n}}</span>
+      </a>
+
+      <!--HS [2018-may-11] - Delivery Item Page - Added scan lable for type to scan - add lable for type to scan  -->
+      <a class="tab-item" data-ng-click="scanBarcodeByType()">
+        <i class="icon ion-ios-barcode-outline"></i>
+        <span class="tab-title">הקלד</span>
+    </a>
+
+      <a ng-if="item" class="tab-item"
+         data-ng-click="openNavigation(item )" >
+        <i class="icon ion-navigate"></i>
+        <span class="tab-title">{{'navigate' | i18n}}</span>
+      </a>
+      <a ng-if="item" class="tab-item "
+         data-ng-click="ScheduleDeliveryPopup(item )">
+        <i class="icon ion-ios-timer"></i>
+        <span class="tab-title">{{'ScheduleDelivery' | i18n}}</span>
+      </a>
+      <a ng-if="item" class="tab-item "
+         data-ng-click="acceptDeliveryPopup(item)">
+        <i class="icon ion-person-add"></i>
+        <span class="tab-title">{{'acceptDelivery' | i18n}}</span>
+      </a>
+    </div>
+  </div>
+
+
+
+</ion-view>

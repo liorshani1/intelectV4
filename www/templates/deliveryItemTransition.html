@@ -1,0 +1,26 @@
+<div style="direction:rtl;">
+  <ion-list>
+    <ion-radio ng-repeat="reason in selectedTransition.Reasons" ng-click="selectReason(reason)">{{reason.DeliveryReasonName}}</ion-radio>
+  </ion-list>
+
+
+  <div ng-if="selectedTransition" class="item">
+    <label>
+      הערות
+      <textarea ng-model="selectedTransition.notes" rows="5"></textarea>
+    </label>
+  </div>
+
+  <div ng-if="selectedTransition.ChangeItemStateTo == 4 " class="item " style="margin-top:10px;">
+    <label>
+      שם המקבל
+      <input type="text" ng-model="selectedTransition.deliveredToName"  />
+    </label>
+  </div>
+
+
+</div>
+
+
+
+
