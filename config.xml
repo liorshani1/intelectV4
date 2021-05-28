@@ -28,6 +28,7 @@
   <plugin name="cordova-plugin-statusbar" spec="2.1.1" />
   <plugin name="cordova-plugin-geolocation" spec="2.1.0" />
   <plugin name="cordova-plugin-network-information" spec="1.2.0" />
+  <plugin name="cordova-plugin-android-permissions" spec="1.1.2" />
   
   <plugin name="cordova-plugin-camera" spec="2.4.1">
       <variable name="CAMERA_USAGE_DESCRIPTION" value="Allow app to use your camera" />

@@ -15,5 +15,16 @@
   "bugs": {
     "url": "https://github.com/liorshani1/intelectV4/issues"
   },
-  "homepage": "https://github.com/liorshani1/intelectV4#readme"
+  "homepage": "https://github.com/liorshani1/intelectV4#readme",
+  "devDependencies": {
+    "cordova": "^10.0.0",
+    "cordova-plugin-android-permissions": "^1.1.2",
+    "cordova-plugin-whitelist": "^1.2.1"
+  },
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-android-permissions": {}
+    }
+  }
 }
